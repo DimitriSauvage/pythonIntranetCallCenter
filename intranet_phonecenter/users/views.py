@@ -4,5 +4,15 @@ from django.shortcuts import render
 # Create your views here.
 
 
-def hello(request):
+def hello_old(request):
     return HttpResponse("Hello world")
+
+
+def hello(request):
+    return render(
+        request,
+        "users/hello.html",
+        {
+            "message": "Hello world"
+        }
+    )
