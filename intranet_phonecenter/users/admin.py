@@ -4,9 +4,9 @@ from .models import Customer, TeamMember, UserProfile
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'user_type', 'display_name', )
+    list_display = ('username', 'email', 'user_type', 'display_name', 'newsletter_agreement')
     list_filter = ['user_type', ]
-    list_editable = ['display_name', ]
+    list_editable = ['display_name', 'newsletter_agreement']
     search_fields = ['username', 'email', 'display_name', ]
 
 

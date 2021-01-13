@@ -83,4 +83,4 @@ class AccountSettingsForm(ModelFormWithSubmit):
 
     class Meta:
         model = UserProfile
-        fields = ('display_name', )
+        fields = ('display_name', 'newsletter_agreement')
