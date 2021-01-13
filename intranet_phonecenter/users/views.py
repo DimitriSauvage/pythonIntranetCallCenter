@@ -1,3 +1,4 @@
+from .forms import RegisterForm, AccountSettingsForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -81,7 +82,35 @@ def register(request):
         request,
         'utils/form.html',
         {
-            'url_form': reverse("users:register"),
             'title': "Inscription",
             'form': form,
         })
+
+
+@login_required
+def myaccount(request):
+    return render(
+        request,
+        'users/myaccount.html',
+    )
+
+
+@login_required
+def account_settings(request):
+    if request.method == 'POST':
+        form = AccountSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+        else: 
+            print(form)
+    else:
+        form = AccountSettingsForm(instance=request.user)
+    return render(
+        request,
+        'utils/form.html',
+        {
+            'url_form': reverse("users:register"),
+            'title': "Mes informations",
+            'form': form,
+        }
+    )
