@@ -3,12 +3,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import redirect
 
 from .forms import RegisterForm
 from .models import UserProfile
 
+def is_teammember(user=None):
+    if not user or user.is_anonymous:
+        return False
+    return user.is_teammember()
 
 def hello_old(request):
     return HttpResponse("Hello world")
@@ -101,7 +105,7 @@ def account_settings(request):
         form = AccountSettingsForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-        else: 
+        else:
             print(form)
     else:
         form = AccountSettingsForm(instance=request.user)
@@ -112,5 +116,18 @@ def account_settings(request):
             'url_form': reverse("users:register"),
             'title': "Mes informations",
             'form': form,
+        }
+    )
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def role_attribution(request):
+    users = UserProfile.objects.filter(
+        teammember__isnull=True, customer__isnull=True).order_by("-id")
+    return render(
+        request,
+        'users/role_attribution.html',
+        {
+            'users': users,
         }
     )

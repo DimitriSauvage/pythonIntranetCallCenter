@@ -15,6 +15,12 @@ class BaseModel(models.Model):
 
 
 class UserProfile(AbstractUser, BaseModel):
+    def is_teammember(self):
+        return self.user_type == 1
+
+
+    def is_customer(self):
+        return self.user_type == 2
 
     USER_TYPE_CHOICES = (
         (1, 'teammember'),

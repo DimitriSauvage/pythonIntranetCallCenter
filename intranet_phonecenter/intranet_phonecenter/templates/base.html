@@ -62,6 +62,22 @@
                             >Admin Django</a
                         >
                     </li>
+                    <li class="nav-item active">
+                        <a
+                            href="{% url 'users:role_attribution' %}"
+                            class="nav-link"
+                            >Gestion des rôles</a
+                        >
+                    </li>
+                    {% endif %} 
+                    {% if request.user.is_teammember %}
+                        <li class="nav-item active">
+                            <a
+                                class="nav-link"
+                                href="{% url 'calls:new_call' %}"
+                                >Nouvel appel</a
+                            >
+                        </li>
                     {% endif %}
                     <li class="nav-item active">
                         <a class="nav-link" href="{% url 'users:logout' %}"
