@@ -72,11 +72,7 @@
                     {% endif %} 
                     {% if request.user.is_teammember %}
                         <li class="nav-item active">
-                            <a
-                                class="nav-link"
-                                href="{% url 'calls:new_call' %}"
-                                >Nouvel appel</a
-                            >
+                            <a class="nav-link" href="{% url 'calls:call_list' %}">Liste d'appels</a>
                         </li>
                     {% endif %}
                     <li class="nav-item active">

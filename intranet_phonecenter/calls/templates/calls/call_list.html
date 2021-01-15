@@ -1,0 +1,53 @@
+{% extends "base.html" %} 
+{% load static %}
+{% load i18n %}
+{% block title_html %} Liste d'appels {% endblock %} 
+{% block content %}
+<div class="d-flex flex-row justify-content-between align-items-center flex-wrap mb-1">
+    <h2>Liste d'appels</h2>
+    <div>
+        <a
+            class="btn btn-primary"
+            href="{% url 'calls:new_call' %}"
+            role="button"
+            >Nouvel appel</a
+        >
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Appel</th>
+            <th scope="col">Client</th>
+            <th scope="col">Résolu</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for call in calls %}
+        <tr>
+            <th scope="row">{{ call }}</th>
+            <td>{{ call.customer }}</td>
+            <td>{% if call.solved %} ✅ {% else %} ❌ {% endif %}</td>
+            <td>
+                <a
+                    class="btn btn-primary"
+                    href="{% url 'calls:call_edit' call.id %}"
+                    >Modifier</a
+                >
+            </td>
+            <td>
+                <a
+                    class="btn btn-primary"
+                    href="{% url 'calls:call_delete' call.id %}"
+                    >Supprimer</a
+                >
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
